@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Index page</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style type="text/css">
+            th {
+                text-align: center;
+                font-weight: bold;
+                border-top: none !important;
+            }
+
+            th, td {
+                white-space: nowrap;
+            }
+
+            .mt-20 {
+                margin-top: 20px;
+            }
+
+            .table-alignment {
+                margin-left: -200px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <h3 class="text-info text-center mt-20">Pagination Example : Residents</h3>
+
+            <table class="table table-striped table-alignment mt-20 text-center">
+                <thead id="residentsTable">
+                    <tr>
+                        <th>Id</th>
+                        <th>Full name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Phone Number</th>
+                        <th>Email Address</th>
+                        <th>Date of Birth</th>
+                        <th>Home Address</th>
+                        <th>Nationality</th>
+                        <th>First Language</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="resident : ${responseEntity}">
+                        <td th:text="${resident.id}"></td>
+                        <td th:text="${resident.fullName}"></td>
+                        <td th:text="${resident.age}"></td>
+                        <td th:text="${resident.gender}"></td>
+                        <td th:text="${resident.phoneNumber}"></td>
+                        <td th:text="${resident.emailAddress}"></td>
+                        <td th:text="${resident.dateOfBirth}"></td>
+                        <td th:text="${resident.homeAddress}"></td>
+                        <td th:text="${resident.nationality}"></td>
+                        <td th:text="${resident.firstLanguage}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Pagination control -->
+            <!-- Hardcoding the default page-size as 10. User can create a dropdown to select the different page-sizes. -->
+            <div class="row">
+                <div>
+                    <div>
+                        Total Items: [[${fetchCount}]]
+                    </div>
+                    <div>
+                        <a th:if="${min > fetchMinId}"
+                           th:href="@{'/residents/?page='+${min}+'&size=10&dir=prev'}" >
+                            Prev
+                        </a>
+                        <span th:unless="${min > fetchMinId}">Prev</span>
+                    </div>
+                    <div>
+                        <a th:if="${max < fetchMaxId}"
+                           th:href="@{'/residents/?page='+${max}+'&size=10&dir=next'}" >
+                            Next
+                        </a>
+                        <span th:unless="${max < fetchMaxId}">Next</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+</html>
